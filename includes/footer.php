@@ -1,8 +1,10 @@
         </div>
     </div>
+    <hr>
     <footer class="text-center" id="footer">
-        &copy; Copyright 2013-2015 Badreddine Boutique
+        &copy; Copyright <?= Date('Y');?>, Vente du Garage
     </footer>
+    <hr>
 
 
     
@@ -24,6 +26,23 @@
                 "transform" : "translate(0px, -"+vscroll/2+"px)"
             });      
         });
+
+        //fonction pour gerer le detail de produit
+            function detailsModal(id){
+                var data = {"id" : id};
+                jQuery.ajax({
+                    url : <?= BASEURL;?>+'includes/detailsmodal.php',
+                    method : "post",
+                    data : data,
+                    success : function(data){
+                        jQuery('body').append(data);
+                        jQuery('#details-modal').modal('toggle');
+                    },
+                    error : function(){
+                        alert('Error!!!!!');
+                    }
+                });
+            }
     </script>
     </body>
 </html>

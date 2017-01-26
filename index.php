@@ -16,12 +16,12 @@ $featured->execute();
                         <h2 class="text-center">Caractéristiques de produits</h2>
                         <?php for($i=0; $product = $featured->fetch(); $i++) : ?>
                         <!-- Product 1 -->
-                        <div class="col-md-3">
+                        <div class="col-md-3 text-center">
                             <h4><?= $product['title']; ?></h4>
-                            <img src="<?= $product['image']; ?>" alt="Levis Jean" class="img-thumb"/>
-                            <p class="list-price text-danger">Liste de prix: <s><?= $product['list_price']; ?></s></p>
-                            <p class="price">Notre Prix: <?= $product['price']; ?></p>
-                            <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#details-1">Details</button>
+                            <img src="<?= $product['image']; ?>" alt="<?= $product['title']; ?>" class="img-thumb"/>
+                            <p class="list price text-danger">Liste de prix: <s><?= $product['list_price']; ?></s></p>
+                            <p class="price">Notre Prix: $<?= $product['price']; ?></p>
+                            <button type="button" class="btn btn-sm btn-success" onclick="detailsModal(<?= $product['id']; ?>)">Details</button>
                         </div>
                         <?php endfor;?>
                     </div>
@@ -29,6 +29,5 @@ $featured->execute();
 
 <?php
 include'includes/rightbar.php';
-include'includes/detailsmodal.php';
 include'includes/footer.php';
 ?>
