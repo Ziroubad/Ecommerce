@@ -3,8 +3,22 @@ require_once'../core/init.php';
 include'includes/head.php';
 include'includes/navigation.php';
 
-//gestion de form 
+
 $errors = array();
+//Suprimer une marque
+if(isset($_GET['delete']) && !empty($_GET['delete'])){
+        $brand_id = (int) $_GET['delete'];
+        $brand_id = valide_input($brand_id);
+
+        //Suprimer de la base de donnée
+        $requette = " DELETE FROM brand WHERE id = '$brand_id' ";
+        $requette= $db->prepare($requette);
+        $requette->execute();
+        header('Location: brands.php');
+    }
+
+//gestion de form 
+
 if(isset($_POST['add_submit_brand'])){
     //Verfifier le input d user
     $brand = valide_input($_POST['brand']);
@@ -13,26 +27,6 @@ if(isset($_POST['add_submit_brand'])){
     if($_POST['brand'] == ''){
         $errors[] .= 'Entrer une marque SVP !';
     }
-
-
-
-
-    //Suprimer une marque
-    if(isset($_GET['delete']) && !empty($_GET['delete'])){
-        $_GET['delete'] = (int) $_GET['delete'];
-        //$brand_id = $_GET['delete'];
-        //$brand_id = valide_input($brand_id);
-        echo $brand_id;
-        $requette = " DELETE FROM brand WHERE id = '$brand_id' ";
-        $requette= $db->prepare($requette);
-        $requette->execute();
-    }
-    
-
-
-
-
-
     //verifer si la marque exisit dans la base de données
     $requette = "SELECT * FROM brand WHERE brand = '$brand' ";
     $requette = $db->prepare($requette);
@@ -57,9 +51,14 @@ if(isset($_POST['add_submit_brand'])){
         $requette->execute();
         header('Location: brands.php');
     }
+
 }
 
 ?>
+
+
+
+
 
 <h2 class="text-center">Nous marques</h2>
 <hr>
@@ -94,7 +93,7 @@ if(isset($_POST['add_submit_brand'])){
             <?php for($i=0; $t_brand = $resultat->fetch(); $i++ ) :;?>
                 <td><?= $t_brand['brand']?></td>
                 <td><a href="brands.php?edit=<?= $t_brand['id']?>" class="bnt btn-xs btn-default"><span class="glyphicon glyphicon-pencil"></span></a></td>
-                <td><a href='brands.php?delete=<?=$t_brand['id']?>' class="bnt btn-xs btn-default"><span class="glyphicon glyphicon-remove"></span></a></td>
+                <td><a href="brands.php?delete=<?= $t_brand['id'] ?>" onclick="return confirm('Est-ce-que tu es sure de suprimer cette marque ?')" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-remove"></span></a></td>
         </tr>
             <?php  endfor;?>
     </tbody>
