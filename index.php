@@ -18,13 +18,13 @@ $featured->execute();
                         <!-- Product 1 -->
                         <div class="col-md-3 text-center">
                             <h4><?= $product['title']; ?></h4>
-                            <img src="<?= $product['image']; ?>" alt="<?= $product['title']; ?>" class="img-thumb"/>
+                            <img src="<?= $product['image']; ?>" alt="<?= $product['title']; ?>" class="img-thumb img-thumbnail"/>
                             <p class="list price text-danger">Liste de prix: <s><?= $product['list_price']; ?></s></p>
                             <p class="price">Notre Prix: $<?= $product['price']; ?></p>
                             <button type="button" class="btn btn-sm btn-success" onclick="detailsModal(<?= $product['id']; ?>)">Details</button>
                         </div>
                         <?php endfor;?>
-                    </div>
+                    </div><hr>
                 </div>
 
 <?php

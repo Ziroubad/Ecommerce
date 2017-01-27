@@ -1,3 +1,16 @@
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: "Oswald"
+}
+
+body {
+    font-family: "Open Sans"
+}
+
 body {
     padding-top: 50px;
 }
@@ -63,4 +76,9 @@ body {
 img.details {
     width: 33%;
     margin: 15px auto;
+}
+
+table.table-auto {
+    width: auto;
+    margin: 0 auto;
 }

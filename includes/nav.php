@@ -3,6 +3,7 @@
  $pquery = $db->prepare($sql);
  $pquery->execute();
  ?>
+
     <!-- Top Nav Bar -->
         <nav class="navbar navbar-default navbar-fixed-top">
             <div class="container">

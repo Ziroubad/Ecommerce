@@ -61,7 +61,7 @@ require_once('../core/init.php');
                                                         $string_array = explode(':' , $string);
                                                         $size = $string_array[0];
                                                         $quantity = $string_array[1];
-                                                    echo '<option value="'.$size.'">'.$size.' ('.$quantity.' Available)</option>';
+                                                    echo '<option value="'.$size.'">'.$size.' ('.$quantity.' NB.Disponible)</option>';
                                                     }
                                                     ?>
                                                 </select>
@@ -80,6 +80,7 @@ require_once('../core/init.php');
                 </div>
             </div>
 <script>
+//fonction gere la fermuture de detail modele
     function closeMoal(){
         $('#details-modal').modal('hide');
         setTimeout(function(){
