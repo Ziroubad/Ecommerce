@@ -10,6 +10,6 @@ try{
     echo "Connection failed: " . $e->getMessage();
     }
 
-require_once '../config.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/config.php';
 //apelle de chemin via la constanate define BASEURL
 require_once BASEURL.'helpers/helpers.php';

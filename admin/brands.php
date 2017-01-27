@@ -3,23 +3,63 @@ require_once'../core/init.php';
 include'includes/head.php';
 include'includes/navigation.php';
 
-
-//requette : get brands from database
-$sql = ("SELECT * FROM brand ORDER BY brand");
-$resultat = $db->prepare($sql);
-$resultat->execute();
-
 //gestion de form 
 $errors = array();
 if(isset($_POST['add_submit_brand'])){
-    //verifier si la marque est vide 
+    //Verfifier le input d user
+    $brand = valide_input($_POST['brand']);
+
+    //verifier si le input est vide 
     if($_POST['brand'] == ''){
-        $errors[] = 'Entrer une marque SVP !';
+        $errors[] .= 'Entrer une marque SVP !';
+    }
+
+
+
+
+    //Suprimer une marque
+    if(isset($_GET['delete']) && !empty($_GET['delete'])){
+        $_GET['delete'] = (int) $_GET['delete'];
+        //$brand_id = $_GET['delete'];
+        //$brand_id = valide_input($brand_id);
+        echo $brand_id;
+        $requette = " DELETE FROM brand WHERE id = '$brand_id' ";
+        $requette= $db->prepare($requette);
+        $requette->execute();
+    }
+    
+
+
+
+
+
+    //verifer si la marque exisit dans la base de données
+    $requette = "SELECT * FROM brand WHERE brand = '$brand' ";
+    $requette = $db->prepare($requette);
+    $requette->execute();
+    // Return the number of rows in result set
+    $count_rows= $requette->rowCount();
+    if($count_rows > 0){
+        $errors[] .= '<p>La marque : </p><strong>'.$brand.'</strong>'.', exisiste déja. SVP Entrer une autre marque' ;
+    }
+
+
+    //Affichage des $errors
+    if(!empty($errors)){
+        echo display_errors($errors);
+   
+    }else{
+        $brand =  valide_input($_POST['brand']);
+        //ajouter la marque à la base de données par PDO objet
+        $requette = ' INSERT INTO brand(brand) VALUES(:brand) ';
+        $requette = $db->prepare($requette);
+        $requette->bindValue(':brand', $brand);
+        $requette->execute();
+        header('Location: brands.php');
     }
 }
+
 ?>
-
-
 
 <h2 class="text-center">Nous marques</h2>
 <hr>
@@ -29,7 +69,7 @@ if(isset($_POST['add_submit_brand'])){
             <div class="form-group" >
                 <label for="brand">Ajouter une marque : </label>
                 <input type="text" name="brand" id="brand" class="form-control" value="<?= (isset($_POST['brand']) ? $_POST['brand'] : ''); ?>">
-                <input type="submit" name="add__submit_brand"  value="add brand" class="btn btn-success">
+                <input type="submit" name="add_submit_brand"  value="add brand" class="btn btn-success">
             </div>
         </form>
     </div>
@@ -43,12 +83,18 @@ if(isset($_POST['add_submit_brand'])){
             <th>Date</th>
         </tr>
     </thead>
+    <?php
+        //requette : get brands from database
+        $sql = ("SELECT * FROM brand ORDER BY brand");
+        $resultat = $db->prepare($sql);
+        $resultat->execute();
+     ?>
     <tbody>
         <tr>
             <?php for($i=0; $t_brand = $resultat->fetch(); $i++ ) :;?>
                 <td><?= $t_brand['brand']?></td>
-                <td><a href="brands.php?edit=1" class="bnt btn-xs btn-default"><span class="glyphicon glyphicon-pencil"></span></a></td>
-                <td><a href="brands.php?delete=1" class="bnt btn-xs btn-default"><span class="glyphicon glyphicon-remove"></span></a></td>
+                <td><a href="brands.php?edit=<?= $t_brand['id']?>" class="bnt btn-xs btn-default"><span class="glyphicon glyphicon-pencil"></span></a></td>
+                <td><a href='brands.php?delete=<?=$t_brand['id']?>' class="bnt btn-xs btn-default"><span class="glyphicon glyphicon-remove"></span></a></td>
         </tr>
             <?php  endfor;?>
     </tbody>

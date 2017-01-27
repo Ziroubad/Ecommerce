@@ -29,7 +29,7 @@
             function detailsModal(id){
                 var data = {"id" : id};
                 jQuery.ajax({
-                    url : <?= BASEURL;?>+'includes/detailsmodal.php',
+                    url : '/ecommerce/includes/detailsmodal.php',
                     method : "post",
                     data : data,
                     success : function(data){

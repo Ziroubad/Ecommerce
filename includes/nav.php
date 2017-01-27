@@ -7,7 +7,7 @@
     <!-- Top Nav Bar -->
         <nav class="navbar navbar-default navbar-fixed-top">
             <div class="container">
-                <a href="index.php" class="navbar-brand">Vente du Garage</a>
+                <a href="index.php" class="navbar-brand">Vente du Trottoir</a>
                 <ul class="nav navbar-nav">
                     <!-- Boucle sur les categorie par Sexe-->
                     <?php for($i=0; $parent = $pquery->fetch(); $i++) : ?>
